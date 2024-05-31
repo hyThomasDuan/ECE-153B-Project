@@ -9,7 +9,7 @@
 #include "SysTimer.h"
 #include "motor.h"
 
-static uint32_t volatile step;
+// static uint32_t volatile step;
 
 void SysTick_Init(void) {
 	// SysTick Control & Status Register
@@ -36,7 +36,7 @@ void SysTick_Init(void) {
 }
 
 void SysTick_Handler(void) {
-	//TODO
+		rotate();
 }
 
 void delay(uint32_t ms) {
