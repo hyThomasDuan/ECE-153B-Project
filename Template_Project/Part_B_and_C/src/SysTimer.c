@@ -10,6 +10,7 @@
 #include "motor.h"
 
 static uint32_t volatile step;
+static volatile uint32_t msTicks;
 
 void SysTick_Init(void) {
 	// SysTick Control & Status Register
@@ -36,9 +37,14 @@ void SysTick_Init(void) {
 }
 
 void SysTick_Handler(void) {
-	//TODO
+	++msTicks;
+	if(getDire()!=3){
+		rotate();}
 }
 
-void delay(uint32_t ms) {
-	//TODO
+void delay (uint32_t T){
+	// [TODO]
+		T = msTicks + T;
+	while (msTicks < T){
+	}
 }
