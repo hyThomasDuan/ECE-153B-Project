@@ -20,7 +20,7 @@ static const uint32_t HalfStep[8] = {
 		GPIO_ODR_OD6 | GPIO_ODR_OD9, // A', B'
 		GPIO_ODR_OD9}; // B'
 
-static volatile int8_t dire = 0;
+static volatile int8_t dire = 3;
 static volatile uint8_t step = 0;
 
 void Motor_Init(void) {	
@@ -100,7 +100,9 @@ void setDire(int8_t direction) {
 	 dire = direction; // 1=clock, 2=counter, 3=stop
 }
 
-
+int8_t getDire(void) {
+	 return dire;
+}
 	
 
 

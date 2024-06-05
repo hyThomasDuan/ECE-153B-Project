@@ -36,7 +36,8 @@ void SysTick_Init(void) {
 }
 
 void SysTick_Handler(void) {
-		rotate();
+	if(getDire()!=3){
+		rotate();}
 }
 
 void delay(uint32_t ms) {
