@@ -3,13 +3,13 @@
 <pre>
 <h1>µVision Build Log</h1>
 <h2>Tool Versions:</h2>
-IDE-Version: ¦ÌVision V5.39.0.0
+IDE-Version: µVision V5.39.0.0
 Copyright (C) 2023 ARM Ltd and ARM Germany GmbH. All rights reserved.
-License Information: Thomas Duan, University of California, Santa Barbara, LIC=----
+License Information: john doe, none, LIC=----
  
 Tool Versions:
 Toolchain:       MDK-Lite  Version: 5.39.0.0
-Toolchain Path:  E:\Keil_v5\ARM\ARMCLANG\Bin
+Toolchain Path:  C:\Keil_v5\ARM\ARMCLANG\Bin
 C Compiler:      ArmClang.exe V6.21
 Assembler:       Armasm.exe V6.21
 Linker/Locator:  ArmLink.exe V6.21
@@ -21,21 +21,60 @@ Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.2.0.0
 Dialog DLL:      TCM.DLL V1.56.4.0
  
 <h2>Project:</h2>
-C:\Users\92037\Desktop\Template_Project\Part_A\project.uvprojx
+C:\Users\VRMA02404222221D3-U1\Desktop\ECE-153B-Project-main\ECE-153B-Project-main\Template_Project\Part_A\project.uvprojx
 Project File Date:  06/04/2024
 
 <h2>Output:</h2>
-*** Using Compiler 'V6.21', folder: 'E:\Keil_v5\ARM\ARMCLANG\Bin'
+*** Using Compiler 'V6.21', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
 Build target 'Target 1'
 src/SysTimer.c(43): warning: unused parameter 'ms' [-Wunused-parameter]
    43 | void delay(uint32_t ms) {
       |                     ^
 1 warning generated.
 compiling SysTimer.c...
+src/main.c(19): warning: unused variable 'ch' [-Wunused-variable]
+   19 |         char ch;
+      |              ^~
+src/main.c(16): warning: no previous extern declaration for non-static variable 'data1' [-Wmissing-variable-declarations]
+   16 | char volatile data1;
+      |               ^
+src/main.c(16): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+   16 | char volatile data1;
+      | ^
+2 warnings generated.
+compiling main.c...
+compiling SysClock.c...
+src/UART.c(145): warning: comparison of integers of different signs: 'int' and 'uint32_t' (aka 'unsigned int') [-Wsign-compare]
+  145 |         for (i = 0; i < nBytes; i++) {
+      |                     ~ ^ ~~~~~~
+src/UART.c(158): warning: no newline at end of file [-Wnewline-eof]
+  158 | }
+      |  ^
+src/UART.c(148): warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  148 |                 USARTx->TDR = buffer[i] & 0xFF;
+      |                               ^~~~~~
+3 warnings generated.
+compiling UART.c...
+src/UART_printf.c(14): warning: unused parameter 'f' [-Wunused-parameter]
+   14 | int fputc(int ch, FILE *f) { 
+      |                         ^
+src/UART_printf.c(23): warning: unused parameter 'f' [-Wunused-parameter]
+   23 | int fgetc(FILE *f) {  
+      |                 ^
+2 warnings generated.
+compiling UART_printf.c...
+src/motor.c(12): warning: unused variable 'MASK' [-Wunused-const-variable]
+   12 | static const uint32_t MASK = 0;//TODO
+      |                       ^~~~
+src/motor.c(96): warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   96 |         GPIOC->ODR = HalfStep[step]; // rotate 1 step
+      |                      ^~~~~~~~
+2 warnings generated.
+compiling motor.c...
 linking...
-Program Size: Code=16792 RO-data=1076 RW-data=4 ZI-data=1812  
+Program Size: Code=16656 RO-data=1084 RW-data=4 ZI-data=1812  
 FromELF: creating hex file...
-".\Objects\project.axf" - 0 Error(s), 1 Warning(s).
+".\Objects\project.axf" - 0 Error(s), 10 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -52,8 +91,8 @@ Package Vendor: Keil
 
 <h2>Collection of Component include folders:</h2>
   ./RTE/_Target_1
-  E:/ARM/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include
-  E:/ARM/Packs/Keil/STM32L4xx_DFP/2.7.0/Drivers/CMSIS/Device/ST/STM32L4xx/Include
+  C:/Users/VRMA02404222221D3-U1/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include
+  C:/Users/VRMA02404222221D3-U1/AppData/Local/Arm/Packs/Keil/STM32L4xx_DFP/2.7.0/Drivers/CMSIS/Device/ST/STM32L4xx/Include
 
 <h2>Collection of Component Files used:</h2>
 

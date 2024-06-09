@@ -14,12 +14,19 @@
 #define BufferSize 32
 #define IO_SIZE 256
 
+void clearActiveBuffer(void);
+void on_complete_transfer(void);
+
 void UART1_Init(void);
 void UART2_Init(void);
 void UART1_GPIO_Init(void);
 void UART2_GPIO_Init(void);
 
 void USART_Init(USART_TypeDef* USARTx);
+void setSRC_DMA_Channel(DMA_Channel_TypeDef * tx);
+
+void Init_USART1_IRQn(void);
+void Init_USART2_IRQn(void);
 
 void USART1_IRQHandler(void);
 void USART2_IRQHandler(void);

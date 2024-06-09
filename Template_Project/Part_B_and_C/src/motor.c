@@ -86,7 +86,7 @@ void rotate(void) {
 		}else{
 				step = 0;
 		}
-	}else{ //counter
+	}else{ //counter rotate
 			if(step > 0){ 
 					step--;
 			}else{

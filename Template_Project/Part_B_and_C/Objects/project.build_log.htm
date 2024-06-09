@@ -1,0 +1,161 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: µVision V5.39.0.0
+Copyright (C) 2023 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: john doe, none, LIC=----
+ 
+Tool Versions:
+Toolchain:       MDK-Lite  Version: 5.39.0.0
+Toolchain Path:  C:\Keil_v5\ARM\ARMCLANG\Bin
+C Compiler:      ArmClang.exe V6.21
+Assembler:       Armasm.exe V6.21
+Linker/Locator:  ArmLink.exe V6.21
+Library Manager: ArmAr.exe V6.21
+Hex Converter:   FromElf.exe V6.21
+CPU DLL:         SARMCM3.DLL V5.39.0.0
+Dialog DLL:      DCM.DLL V1.17.5.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.2.0.0
+Dialog DLL:      TCM.DLL V1.56.4.0
+ 
+<h2>Project:</h2>
+C:\Users\VRMA02404222221D3-U1\Desktop\ECE-153B-Project-main\ECE-153B-Project-main\Template_Project\Part_B_and_C\project.uvprojx
+Project File Date:  06/05/2024
+
+<h2>Output:</h2>
+*** Using Compiler 'V6.21', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
+Build target 'Target 1'
+src/main.c(25): warning: format string is not a string literal (potentially insecure) [-Wformat-security]
+   25 |         sprintf(buffer, inputs);
+      |                         ^~~~~~
+src/main.c(25): note: treat the string as an argument to avoid this
+   25 |         sprintf(buffer, inputs);
+      |                         ^
+      |                         "%s", 
+src/main.c(23): warning: unused parameter 'size' [-Wunused-parameter]
+   23 | void UART_onInput(char* inputs, uint32_t size) {
+      |                                          ^
+2 warnings generated.
+compiling main.c...
+src/SysTimer.c(12): warning: unused variable 'step' [-Wunused-variable]
+   12 | static uint32_t volatile step;
+      |                          ^~~~
+1 warning generated.
+compiling SysTimer.c...
+compiling SysClock.c...
+compiling DMA.c...
+src/I2C.c(30): warning: unused variable 'OwnAddr' [-Wunused-variable]
+   30 |         uint32_t const OwnAddr = 0x52;
+      |                        ^~~~~~~
+src/I2C.c(114): warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  114 |                 I2Cx->TXDR = pData[i] & I2C_TXDR_TXDATA;  // TXE is cleared by writing to the TXDR register.
+      |                              ^~~~~
+src/I2C.c(142): warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  142 |                 pData[i] = I2Cx->RXDR & I2C_RXDR_RXDATA;
+      |                 ^~~~~
+3 warnings generated.
+compiling I2C.c...
+src/UART.c(168): warning: declaration shadows a variable in the global scope [-Wshadow]
+  168 | void setSRC_DMA_Channel(DMA_Channel_TypeDef * tx)
+      |                                               ^
+src/UART.c(14): note: previous declaration is here
+   14 | static volatile DMA_Channel_TypeDef * tx = DMA1_Channel7;
+      |                                       ^
+src/UART.c(196): warning: comparison of integers of different signs: 'int' and 'unsigned int' [-Wsign-compare]
+  196 |                 for (int I = 0; I < strlen(data); I++)
+      |                                 ~ ^ ~~~~~~~~~~~~
+src/UART.c(206): warning: comparison of integers of different signs: 'int' and 'unsigned int' [-Wsign-compare]
+  206 |           for (int I = 0; I< strlen(data); I++)
+      |                           ~^ ~~~~~~~~~~~~
+src/UART.c(234): warning: passing 'volatile char[256]' to parameter of type 'char *' discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+  234 |                 UART_onInput(inputs, input_size);
+      |                              ^~~~~~
+src/UART.h(35): note: passing argument to parameter 'inputs' here
+   35 | void UART_onInput(char* inputs, uint32_t size);
+      |                         ^
+src/UART.c(222): warning: result of comparison of constant 256 with expression of type 'volatile uint8_t' (aka 'volatile unsigned char') is always true [-Wtautological-constant-out-of-range-compare]
+  222 |         if (input_size < IO_SIZE)
+      |             ~~~~~~~~~~ ^ ~~~~~~~
+src/UART.c(197): warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  197 |                         active[I] = data[I];
+      |                         ^~~~~~
+src/UART.c(197): warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  197 |                         active[I] = data[I];
+      |                                     ^~~~
+src/UART.c(208): warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  208 |                   pending[pending_size] = data[I];
+      |                   ^~~~~~~
+src/UART.c(208): warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  208 |                   pending[pending_size] = data[I];
+      |                                           ^~~~
+src/UART.c(224): warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  224 |           inputs[input_size] = ch;
+      |           ^~~~~~
+10 warnings generated.
+compiling UART.c...
+src/SPI.c(164): warning: implicit conversion loses integer precision: 'volatile uint32_t' (aka 'volatile unsigned int') to 'uint16_t' (aka 'unsigned short') [-Wimplicit-int-conversion]
+  164 |         read_data = SPI1 -> DR;
+      |                   ~ ~~~~~~~~^~
+src/SPI.c(169): warning: no newline at end of file [-Wnewline-eof]
+  169 | }
+      |  ^
+2 warnings generated.
+compiling SPI.c...
+compiling LED.c...
+src/motor.c(12): warning: unused variable 'MASK' [-Wunused-const-variable]
+   12 | static const uint32_t MASK = 0;//TODO
+      |                       ^~~~
+src/motor.c(96): warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   96 |         GPIOC->ODR = HalfStep[step]; // rotate 1 step
+      |                      ^~~~~~~~
+2 warnings generated.
+compiling motor.c...
+src/accelerometer.c(9): warning: implicit conversion loses integer precision: 'int' to 'uint16_t' (aka 'unsigned short') [-Wimplicit-int-conversion]
+    9 |         uint16_t write_data = (uint16_t)addr << 8 | val;
+      |                  ~~~~~~~~~~   ~~~~~~~~~~~~~~~~~~~~^~~~~
+src/accelerometer.c(16): warning: implicit conversion loses integer precision: 'int' to 'uint16_t' (aka 'unsigned short') [-Wimplicit-int-conversion]
+   16 |                 write_data = (uint16_t)addr << 8 | 0x8000;
+      |                            ~ ~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+src/accelerometer.c(17): warning: mixing declarations and code is incompatible with standards before C99 [-Wdeclaration-after-statement]
+   17 |                 uint16_t read_data = SPI_Transfer_Data(write_data);
+      |                          ^
+src/accelerometer.c(5): warning: no previous extern declaration for non-static variable 'test' [-Wmissing-variable-declarations]
+    5 | int volatile test;
+      |              ^
+src/accelerometer.c(5): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+    5 | int volatile test;
+      | ^
+4 warnings generated.
+compiling accelerometer.c...
+linking...
+Program Size: Code=9828 RO-data=1020 RW-data=16 ZI-data=2672  
+FromELF: creating hex file...
+".\Objects\project.axf" - 0 Error(s), 24 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                http://www.keil.com/pack/ARM.CMSIS.5.9.0.pack
+                ARM::CMSIS@5.9.0
+                CMSIS (Common Microcontroller Software Interface Standard)
+   * Component: CORE Version: 5.6.0
+
+Package Vendor: Keil
+                https://www.keil.com/pack/Keil.STM32L4xx_DFP.2.7.0.pack
+                Keil::STM32L4xx_DFP@2.7.0
+                STMicroelectronics STM32L4 Series Device Support, Drivers and Examples
+
+<h2>Collection of Component include folders:</h2>
+  ./RTE/_Target_1
+  C:/Users/VRMA02404222221D3-U1/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include
+  C:/Users/VRMA02404222221D3-U1/AppData/Local/Arm/Packs/Keil/STM32L4xx_DFP/2.7.0/Drivers/CMSIS/Device/ST/STM32L4xx/Include
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ARM::CMSIS:CORE@5.6.0
+Build Time Elapsed:  00:00:02
+</pre>
+</body>
+</html>
