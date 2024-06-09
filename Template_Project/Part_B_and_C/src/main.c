@@ -34,9 +34,17 @@ int main(void) {
 
 	LED_Init();
 	
-	//char buffer2[256] = {'A','B','C','D','E','F'};
-	//sprintf(buffer2, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 	
+	UART1_Init();
+	UART1_GPIO_Init();
+	
+	DMA_Init_UARTx(DMA1_Channel4, USART1);
+	Init_DMA1_Channel4_IRQn();
+  Init_USART1_IRQn();
+	setSRC_DMA_Channel(DMA1_Channel4);
+	
+	
+	/*
 	UART2_Init();
 	UART2_GPIO_Init();
 	
@@ -44,6 +52,7 @@ int main(void) {
 	Init_DMA1_Channel7_IRQn();
   Init_USART2_IRQn();
 	setSRC_DMA_Channel(DMA1_Channel7);
+	*/
 	
 	/*
 	uint32_t BuffAdd = (uint32_t)&buffer2; 

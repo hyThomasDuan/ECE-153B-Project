@@ -41,8 +41,8 @@ void DMA_Init_UARTx(DMA_Channel_TypeDef * tx, USART_TypeDef * uart){
 		tx->CCR &= ~DMA_CCR_TEIE; //disable transfer error interrupt
 		tx->CCR |= DMA_CCR_TCIE; //enable transfer complete interrupt
 
-	  DMA1_CSELR -> CSELR = 0x02000000; ///
-
+	  //DMA1_CSELR -> CSELR = 0x02000000; ///
+		DMA1_CSELR -> CSELR = 2UL<<24 |  2UL<<12; ///
 }
 	
 void Init_DMA1_Channel4_IRQn(void){ //USART1
