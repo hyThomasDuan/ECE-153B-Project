@@ -16,7 +16,7 @@ void SysTick_Init(void) {
 	// SysTick Control & Status Register
 	SysTick->CTRL = 0; // Disable SysTick IRQ and SysTick Counter
 
-	SysTick->LOAD = 79999;
+	SysTick->LOAD = 79999; //59999 is the lowest with motor still turning
 	SysTick->VAL = 0;
 	
 	// Enables SysTick exception request

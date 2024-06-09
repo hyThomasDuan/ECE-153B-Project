@@ -13,8 +13,8 @@
 
 
 
-//static volatile DMA_Channel_TypeDef * tx = DMA1_Channel7;
-static volatile DMA_Channel_TypeDef * tx = DMA1_Channel4;
+static volatile DMA_Channel_TypeDef * tx = DMA1_Channel7;
+//static volatile DMA_Channel_TypeDef * tx = DMA1_Channel4;
 
 static volatile char inputs[IO_SIZE];
 static volatile uint8_t data_t_0[IO_SIZE];
@@ -41,6 +41,8 @@ void UART1_Init(void) {
 	RCC->CCIPR |= RCC_CCIPR_USART1SEL_0;
 	RCC->CCIPR &= ~RCC_CCIPR_USART1SEL_1;
 	
+	tx = DMA1_Channel4;
+	
 }
 
 void UART2_Init(void) {
@@ -51,6 +53,8 @@ void UART2_Init(void) {
 	//Set USART2 source as system clock 
 	RCC->CCIPR |= RCC_CCIPR_USART2SEL_0;
 	RCC->CCIPR &= ~RCC_CCIPR_USART2SEL_1;
+	
+	tx = DMA1_Channel7;
 	
 }
 

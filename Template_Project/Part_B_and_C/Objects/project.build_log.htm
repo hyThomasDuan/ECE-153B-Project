@@ -27,48 +27,24 @@ Project File Date:  06/05/2024
 <h2>Output:</h2>
 *** Using Compiler 'V6.21', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
 Build target 'Target 1'
-src/UART.c(172): warning: declaration shadows a variable in the global scope [-Wshadow]
-  172 | void setSRC_DMA_Channel(DMA_Channel_TypeDef * tx)
-      |                                               ^
-src/UART.c(17): note: previous declaration is here
-   17 | static volatile DMA_Channel_TypeDef * tx = DMA1_Channel4;
-      |                                       ^
-src/UART.c(200): warning: comparison of integers of different signs: 'int' and 'unsigned int' [-Wsign-compare]
-  200 |                 for (int I = 0; I < strlen(data); I++)
-      |                                 ~ ^ ~~~~~~~~~~~~
-src/UART.c(210): warning: comparison of integers of different signs: 'int' and 'unsigned int' [-Wsign-compare]
-  210 |           for (int I = 0; I< strlen(data); I++)
-      |                           ~^ ~~~~~~~~~~~~
-src/UART.c(238): warning: passing 'volatile char[256]' to parameter of type 'char *' discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
-  238 |                 UART_onInput(inputs, input_size);
-      |                              ^~~~~~
-src/UART.h(35): note: passing argument to parameter 'inputs' here
-   35 | void UART_onInput(char* inputs, uint32_t size);
-      |                         ^
-src/UART.c(226): warning: result of comparison of constant 256 with expression of type 'volatile uint8_t' (aka 'volatile unsigned char') is always true [-Wtautological-constant-out-of-range-compare]
-  226 |         if (input_size < IO_SIZE)
-      |             ~~~~~~~~~~ ^ ~~~~~~~
-src/UART.c(201): warning: unsafe buffer access [-Wunsafe-buffer-usage]
-  201 |                         active[I] = data[I];
-      |                         ^~~~~~
-src/UART.c(201): warning: unsafe buffer access [-Wunsafe-buffer-usage]
-  201 |                         active[I] = data[I];
-      |                                     ^~~~
-src/UART.c(212): warning: unsafe buffer access [-Wunsafe-buffer-usage]
-  212 |                   pending[pending_size] = data[I];
-      |                   ^~~~~~~
-src/UART.c(212): warning: unsafe buffer access [-Wunsafe-buffer-usage]
-  212 |                   pending[pending_size] = data[I];
-      |                                           ^~~~
-src/UART.c(228): warning: unsafe buffer access [-Wunsafe-buffer-usage]
-  228 |           inputs[input_size] = ch;
-      |           ^~~~~~
-10 warnings generated.
-compiling UART.c...
+src/main.c(25): warning: unused parameter 'size' [-Wunused-parameter]
+   25 | void UART_onInput(char* inputs, uint32_t size) {
+      |                                          ^
+src/main.c(153): warning: mixing declarations and code is incompatible with standards before C99 [-Wdeclaration-after-statement]
+  153 |         double x,y,z;
+      |                ^
+src/main.c(21): warning: no previous extern declaration for non-static variable 'Data_Receive' [-Wmissing-variable-declarations]
+   21 | uint8_t volatile Data_Receive; // for I2C
+      |                  ^
+src/main.c(21): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+   21 | uint8_t volatile Data_Receive; // for I2C
+      | ^
+3 warnings generated.
+compiling main.c...
 linking...
-Program Size: Code=9864 RO-data=1020 RW-data=16 ZI-data=2672  
+Program Size: Code=12560 RO-data=1092 RW-data=16 ZI-data=2680  
 FromELF: creating hex file...
-".\Objects\project.axf" - 0 Error(s), 10 Warning(s).
+".\Objects\project.axf" - 0 Error(s), 3 Warning(s).
 
 <h2>Software Packages used:</h2>
 

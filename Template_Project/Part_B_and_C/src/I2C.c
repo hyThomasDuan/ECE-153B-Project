@@ -14,7 +14,40 @@
 //                        I2C GPIO Initialization
 //===============================================================================
 void I2C_GPIO_Init(void) {
-	//TODO
+	  // Enable GPIO Clocks
+		RCC->AHB2ENR |= RCC_AHB2ENR_GPIOBEN;
+
+		// GPIO Mode
+		GPIOB->MODER &= ~GPIO_MODER_MODE8_0;
+		GPIOB->MODER |= GPIO_MODER_MODE8_1;
+	
+		GPIOB->MODER &= ~GPIO_MODER_MODE9_0;
+		GPIOB->MODER |= GPIO_MODER_MODE9_1;
+	
+		//Set I/O output speed value as very high speed
+		GPIOB->OSPEEDR |= GPIO_OSPEEDR_OSPEED8;
+		GPIOB->OTYPER |= GPIO_OTYPER_OT8;
+	
+		GPIOB->OSPEEDR |= GPIO_OSPEEDR_OSPEED9;
+		GPIOB->OTYPER |= GPIO_OTYPER_OT9;
+	
+		// GPIO Push-Pull: Pull-up
+		GPIOB->PUPDR |= GPIO_PUPDR_PUPDR8_0;
+		GPIOB->PUPDR &= ~GPIO_PUPDR_PUPDR8_1;
+		
+		GPIOB->PUPDR |= GPIO_PUPDR_PUPDR9_0;
+		GPIOB->PUPDR &= ~GPIO_PUPDR_PUPDR9_1;
+	
+		// Alternative Function
+		GPIOB->AFR[1] &= ~GPIO_AFRH_AFSEL8_0;
+		GPIOB->AFR[1] &= ~GPIO_AFRH_AFSEL8_1;
+		GPIOB->AFR[1] |= GPIO_AFRH_AFSEL8_2;
+		GPIOB->AFR[1] &= ~GPIO_AFRH_AFSEL8_3;
+		
+		GPIOB->AFR[1] &= ~GPIO_AFRH_AFSEL9_0;
+		GPIOB->AFR[1] &= ~GPIO_AFRH_AFSEL9_1;
+		GPIOB->AFR[1] |= GPIO_AFRH_AFSEL9_2;
+		GPIOB->AFR[1] &= ~GPIO_AFRH_AFSEL9_3;
 }
 	
 #define I2C_TIMINGR_PRESC_POS	28
@@ -28,7 +61,68 @@ void I2C_GPIO_Init(void) {
 //===============================================================================
 void I2C_Initialization(void){
 	uint32_t const OwnAddr = 0x52;
-	//TODO
+
+	RCC->APB1ENR1 |= RCC_APB1ENR1_I2C1EN;
+	
+	// Select system clock
+	RCC->CCIPR |= RCC_CCIPR_I2C1SEL_0;
+	RCC->CCIPR &= ~RCC_CCIPR_I2C1SEL_1;
+	
+	//Reset I2C1
+	
+	RCC ->APB1RSTR1 |= RCC_APB1RSTR1_I2C1RST;
+	
+	//Clear reset bits
+	
+	RCC ->APB1RSTR1 &= ~RCC_APB1RSTR1_I2C1RST;
+	
+	//Disable I2C1
+
+	I2C1 -> CR1 &= ~I2C_CR1_PE;
+	
+	//Enable analog filter
+	I2C1 -> CR1 &= ~I2C_CR1_ANFOFF;
+	
+	//Disable digital noise filter
+	I2C1 -> CR1 &= ~I2C_CR1_DNF;
+	
+	//Enable error interrupt
+	
+	I2C1 -> CR1 |= I2C_CR1_ERRIE;
+	
+	//Clock stretching enable
+ 	
+	I2C1 -> CR1 &= ~I2C_CR1_NOSTRETCH;
+	
+	//Enable auto mode
+	I2C1 -> CR2 |= I2C_CR2_AUTOEND;
+	
+	//Enable NACK generation
+	I2C1 -> CR2 |= I2C_CR2_NACK;
+	
+	//Disable add10
+	I2C1 -> CR2 &= ~I2C_CR2_ADD10;
+		
+	//I2C1 Timing
+	I2C1 -> TIMINGR &= ~I2C_TIMINGR_PRESC;
+	I2C1 -> TIMINGR &= ~I2C_TIMINGR_SDADEL;
+	I2C1 -> TIMINGR &= ~I2C_TIMINGR_SCLDEL;
+	I2C1 -> TIMINGR &= ~I2C_TIMINGR_SCLH;
+	I2C1 -> TIMINGR &= ~I2C_TIMINGR_SCLL;
+	I2C1 -> TIMINGR = 8UL << 28 | 14UL << 20 | 14UL << 16 | 49UL << 8 | 49UL;
+	
+	//Own address
+	//I2C1 -> OAR1 &= ~I2C_OAR1_OA1;
+	I2C1 -> OAR1 &= ~I2C_OAR1_OA1EN;
+	I2C1 -> OAR2 &= ~I2C_OAR2_OA2EN;
+	I2C1 -> OAR1 &= ~I2C_OAR1_OA1MODE;
+	I2C1 -> OAR1 = OwnAddr << 1;
+	//I2C1 -> OAR1 |= I2C_OAR1_OA1;
+	I2C1 -> OAR1 |= I2C_OAR1_OA1EN;
+	
+	//Enable I2C1
+	I2C1 -> CR1 |= I2C_CR1_PE;
+
 }
 
 //===============================================================================
