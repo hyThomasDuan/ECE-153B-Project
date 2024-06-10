@@ -8,6 +8,9 @@
 
 #include "stm32l476xx.h"
 #include "motor.h"
+#include "accelerometer.h"
+
+static volatile double x,y,z;
 
 static const uint32_t MASK = 0;//TODO
 static const uint32_t HalfStep[8] = {
@@ -79,7 +82,22 @@ void Motor_Init(void) {
 				
 }
 
+void checkCanRotate(void)
+{
+	readValues(&x, &y, &z);
+	
+	if((dire == 1) && (z*(4E-3) <= 0.0)) 
+		setDire(3);
+	
+	if((dire == 2) && (z*(4E-3) >= 0.8))
+		setDire(3);
+	
+}
+
 void rotate(void) {
+	
+	checkCanRotate();
+	
 	if (dire == 1){ //clockwise
 		if(step < 7){
 				step++;

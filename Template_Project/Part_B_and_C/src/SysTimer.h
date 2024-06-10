@@ -14,5 +14,6 @@
 void SysTick_Init(void);
 void SysTick_Handler(void);
 void delay(uint32_t ms);
+uint8_t doorLockout(uint8_t set);
 
 #endif

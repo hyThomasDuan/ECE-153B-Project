@@ -9,9 +9,8 @@
 
 #include "UART.h"
 #include "DMA.h"
+#include "SysTimer.h"
 #include <string.h>
-
-
 
 static volatile DMA_Channel_TypeDef * tx = DMA1_Channel7;
 //static volatile DMA_Channel_TypeDef * tx = DMA1_Channel4;
@@ -271,6 +270,7 @@ void USART1_IRQHandler(void){
 	 NVIC_ClearPendingIRQ(USART1_IRQn);
 	// When receive a character, invoke transfer_data
 	transfer_data((USART1->RDR & 0xFF));
+	//doorLockout(1);
 	// When complete sending data, invoke on_complete_transfer
 	  //handled by DMA
 
@@ -283,6 +283,7 @@ void USART2_IRQHandler(void){
   NVIC_ClearPendingIRQ(USART2_IRQn); //clear NVIC interrupt (pending) flag
 	// When receive a character, invoke transfer_data
 	transfer_data((USART2->RDR & 0xFF));
+	//doorLockout(1);
 	// When complete sending data, invoke on_complete_transfer
 		//handled by DMA
 	  

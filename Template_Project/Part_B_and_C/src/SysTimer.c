@@ -11,6 +11,7 @@
 
 static uint32_t volatile step;
 static volatile uint32_t msTicks;
+static volatile uint32_t lockout_t = 0;
 
 void SysTick_Init(void) {
 	// SysTick Control & Status Register
@@ -38,13 +39,37 @@ void SysTick_Init(void) {
 
 void SysTick_Handler(void) {
 	++msTicks;
+	doorLockout(0);
 	if(getDire()!=3){
 		rotate();}
+	
 }
 
 void delay (uint32_t T){
 	// [TODO]
 		T = msTicks + T;
 	while (msTicks < T){
+	}
+}
+
+
+
+uint8_t doorLockout(uint8_t set)
+{
+	
+	if(set == 1)
+	{
+			lockout_t = 3000;
+			return 0;
+	}
+	
+	if(lockout_t == 0)
+	{
+			return 1;
+	}
+	else
+	{
+		lockout_t--;
+		return 0;
 	}
 }
