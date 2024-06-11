@@ -51,8 +51,8 @@ src/main.c(31): warning: unused parameter 'size' [-Wunused-parameter]
 src/main.c(121): warning: binary integer literals are a GNU extension [-Wgnu-binary-literal]
   121 |         SecondaryAddress = 0b1001000 << 1; // STUB - Fill in correct address 
       |                            ^
-src/main.c(169): warning: passing 'volatile uint8_t *' (aka 'volatile unsigned char *') to parameter of type 'uint8_t *' (aka 'unsigned char *') discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
-  169 |                 I2C_ReceiveData(I2C1, SecondaryAddress, &Data_Receive, 1UL);
+src/main.c(168): warning: passing 'volatile uint8_t *' (aka 'volatile unsigned char *') to parameter of type 'uint8_t *' (aka 'unsigned char *') discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+  168 |                 I2C_ReceiveData(I2C1, SecondaryAddress, &Data_Receive, 1UL);
       |                                                         ^~~~~~~~~~~~~
 src/I2C.h(15): note: passing argument to parameter 'pData' here
    15 | int8_t I2C_ReceiveData(I2C_TypeDef * I2Cx, uint8_t DeviceAddress, uint8_t *pData, uint8_t Size);
@@ -75,7 +75,7 @@ src/main.c(21): note: declare 'static' if the variable is not intended to be use
 10 warnings generated.
 compiling main.c...
 linking...
-Program Size: Code=14652 RO-data=1200 RW-data=16 ZI-data=2712  
+Program Size: Code=14588 RO-data=1200 RW-data=16 ZI-data=2712  
 FromELF: creating hex file...
 ".\Objects\project.axf" - 0 Error(s), 10 Warning(s).
 

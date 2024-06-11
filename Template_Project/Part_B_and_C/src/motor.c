@@ -11,6 +11,7 @@
 #include "accelerometer.h"
 
 static volatile double x,y,z;
+static volatile uint8_t mPoll;
 
 static const uint32_t MASK = 0;//TODO
 static const uint32_t HalfStep[8] = {
@@ -86,11 +87,16 @@ void checkCanRotate(void)
 {
 	readValues(&x, &y, &z);
 	
-	if((dire == 1) && (z*(4E-3) <= 0.56)) 
-		setDire(3);
+	if((dire == 2) && (z*(4E-3) <= 0.40))
+		mPoll++;
 	
-	if((dire == 2) && (z*(4E-3) >= 0.89))
+	if((dire == 1) && (z*(4E-3) >= 0.90))
+		mPoll++;
+	
+	if(mPoll == 150){
 		setDire(3);
+		mPoll = 0;
+	}
 	
 }
 

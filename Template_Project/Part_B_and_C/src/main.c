@@ -28,6 +28,8 @@ uint8_t volatile message_pending = 0;
 
 uint8_t volatile door_status = 0; //0 for closed, 1 for open
 
+uint8_t volatile tPoll = 0;
+
 void UART_onInput(char* inputs, uint32_t size) {
 	//do write motor commands
 	//sprintf(buffer, inputs);
@@ -87,15 +89,15 @@ int main(void) {
 	double x,y,z;
 	
 	readValues(&x, &y, &z);
-
-	if(z*(4E-3) > 0)
+/*
+	if(z*(4E-3) > 0.55)
 		setDire(1);
 
 	while(z*(4E-3) > 0)
 		readValues(&x, &y, &z);
-	
+*/
 	setDire(3);
-	
+
 	// After initial setup, enable USART
 	
 	UART1_Init();
@@ -134,12 +136,12 @@ int main(void) {
 	
 	while(1)
 	{
-		
 			if ((message_pending == 1) && (getDire() == 3) )
 			{
 				sprintf(buffer, "Door Opened\r\n");
 				UART_print(buffer);
 				message_pending = 0;
+				door_status = 1;
 				
 				if (user_priority == 1)
 				{
@@ -153,6 +155,7 @@ int main(void) {
 				sprintf(buffer, "Door Closed\r\n");
 				UART_print(buffer);
 				message_pending = 0;
+				door_status = 0;
 				
 				if (user_priority == 1)
 				{
@@ -174,30 +177,40 @@ int main(void) {
 		
 		// Some delay
 		//for(int i = 0; i < 50000; ++i); 
-		
+			
+		// Temperature Polling
+		if ((Data_Receive > 23) && (Data_Receive < 128)){
+			tPoll++;
+		}else if((Data_Receive < 10) || (Data_Receive > 128)){
+			tPoll++;
+		}else{
+			tPoll = 0;
+		}
 
 			
-		if(doorLockout(0) && ((Data_Receive > 23) && (Data_Receive < 128)) && (door_status == 0) && (user_priority == 0))
+		if(doorLockout(0) && (tPoll == 5) && (door_status == 0) && (user_priority == 0))
 		{
 		  sprintf(buffer, "Temperature: %d C. Too hot. Door opening.\n", (int8_t)Data_Receive);
 		  UART_print(buffer);
 			message_pending = 1;
-			setDire(2);
+			setDire(1);
+			tPoll = 0;
 		}
 		
-		if(doorLockout(0) && ((Data_Receive < 10) || (Data_Receive > 128)) && (door_status == 0) && (user_priority == 0))
+		if(doorLockout(0) && (tPoll == 5) && (door_status == 1) && (user_priority == 0))
 		{ // ~200 means underflow of the data, door_status should ==1
 			sprintf(buffer, "Temperature: %d C. Too cold. Door closing.\n", (int8_t)Data_Receive);
 		  UART_print(buffer);
 			message_pending = 2;
-			setDire(1);
+			setDire(2);
+			tPoll = 0;
 		}
 		
 		// END I2C
 		
 		// START SPI
 		readValues(&x, &y, &z);
-		sprintf(buffer,"Acceleration: %.2f, %.2f, %.2f\r\n", x*(4E-3), y*(4E-3), z*(4E-3));
+		sprintf(buffer,"Acceleration: %.2f, %.2f, %.2f, Temperature: %d C\r\n", x*(4E-3), y*(4E-3), z*(4E-3), (int8_t)Data_Receive);
 		delay(1000);
 		UART_print(buffer);
 		// END SPI
