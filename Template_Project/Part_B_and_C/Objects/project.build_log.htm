@@ -27,57 +27,7 @@ Project File Date:  06/10/2024
 <h2>Output:</h2>
 *** Using Compiler 'V6.21', folder: 'E:\Keil_v5\ARM\ARMCLANG\Bin'
 Build target 'Target 1'
-src/main.c(25): warning: no previous extern declaration for non-static variable 'user_priority' [-Wmissing-variable-declarations]
-   25 | uint8_t volatile user_priority = 0;
-      |                  ^
-src/main.c(25): note: declare 'static' if the variable is not intended to be used outside of this translation unit
-   25 | uint8_t volatile user_priority = 0;
-      | ^
-src/main.c(27): warning: no previous extern declaration for non-static variable 'message_pending' [-Wmissing-variable-declarations]
-   27 | uint8_t volatile message_pending = 0;
-      |                  ^
-src/main.c(27): note: declare 'static' if the variable is not intended to be used outside of this translation unit
-   27 | uint8_t volatile message_pending = 0;
-      | ^
-src/main.c(29): warning: no previous extern declaration for non-static variable 'door_status' [-Wmissing-variable-declarations]
-   29 | uint8_t volatile door_status = 0; //0 for closed, 1 for open
-      |                  ^
-src/main.c(29): note: declare 'static' if the variable is not intended to be used outside of this translation unit
-   29 | uint8_t volatile door_status = 0; //0 for closed, 1 for open
-      | ^
-src/main.c(31): warning: unused parameter 'size' [-Wunused-parameter]
-   31 | void UART_onInput(char* inputs, uint32_t size) {
-      |                                          ^
-src/main.c(121): warning: binary integer literals are a GNU extension [-Wgnu-binary-literal]
-  121 |         SecondaryAddress = 0b1001000 << 1; // STUB - Fill in correct address 
-      |                            ^
-src/main.c(168): warning: passing 'volatile uint8_t *' (aka 'volatile unsigned char *') to parameter of type 'uint8_t *' (aka 'unsigned char *') discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
-  168 |                 I2C_ReceiveData(I2C1, SecondaryAddress, &Data_Receive, 1UL);
-      |                                                         ^~~~~~~~~~~~~
-src/I2C.h(15): note: passing argument to parameter 'pData' here
-   15 | int8_t I2C_ReceiveData(I2C_TypeDef * I2Cx, uint8_t DeviceAddress, uint8_t *pData, uint8_t Size);
-      |                                                                            ^
-src/main.c(81): warning: mixing declarations and code is incompatible with standards before C99 [-Wdeclaration-after-statement]
-   81 |         uint8_t SecondaryAddress;
-      |                 ^
-src/main.c(82): warning: variable 'Data_Send' set but not used [-Wunused-but-set-variable]
-   82 |         uint8_t Data_Send;
-      |                 ^
-src/main.c(84): warning: unused variable 'Data_Rc' [-Wunused-variable]
-   84 |         uint8_t Data_Rc[1];
-      |                 ^~~~~~~
-src/main.c(21): warning: no previous extern declaration for non-static variable 'Data_Receive' [-Wmissing-variable-declarations]
-   21 | uint8_t volatile Data_Receive; // for I2C
-      |                  ^
-src/main.c(21): note: declare 'static' if the variable is not intended to be used outside of this translation unit
-   21 | uint8_t volatile Data_Receive; // for I2C
-      | ^
-10 warnings generated.
-compiling main.c...
-linking...
-Program Size: Code=14588 RO-data=1200 RW-data=16 ZI-data=2712  
-FromELF: creating hex file...
-".\Objects\project.axf" - 0 Error(s), 10 Warning(s).
+".\Objects\project.axf" - 0 Error(s), 0 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -100,7 +50,7 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE@5.6.0
-Build Time Elapsed:  00:00:01
+Build Time Elapsed:  00:00:00
 </pre>
 </body>
 </html>

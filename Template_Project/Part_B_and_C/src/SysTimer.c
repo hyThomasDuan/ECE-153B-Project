@@ -59,7 +59,7 @@ uint8_t doorLockout(uint8_t set)
 	
 	if(set == 1)
 	{
-			lockout_t = 3000;
+			lockout_t = 600;
 			return 0;
 	}
 	

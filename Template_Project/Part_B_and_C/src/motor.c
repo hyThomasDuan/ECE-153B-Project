@@ -87,7 +87,7 @@ void checkCanRotate(void)
 {
 	readValues(&x, &y, &z);
 	
-	if((dire == 2) && (z*(4E-3) <= 0.40))
+	if((dire == 2) && (z*(4E-3) <= 0.49))
 		mPoll++;
 	
 	if((dire == 1) && (z*(4E-3) >= 0.90))

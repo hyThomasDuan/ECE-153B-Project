@@ -28,29 +28,31 @@ uint8_t volatile message_pending = 0;
 
 uint8_t volatile door_status = 0; //0 for closed, 1 for open
 
-uint8_t volatile tPoll = 0;
+uint8_t volatile t_hPoll = 0;
+uint8_t volatile t_cPoll = 0;
 
 void UART_onInput(char* inputs, uint32_t size) {
 	//do write motor commands
 	//sprintf(buffer, inputs);
 	char data1 = inputs[0];
-	if (data1 == '1' || data1 == 'r')
+	if (data1 == '1' && door_status == 0)
 		{
 			setDire(1);
 			sprintf(buffer, "Opening\n");
 			UART_print(buffer);
 			sprintf(buffer, " ");
-			//while accel not in position
-			//setDire(3);
+			message_pending = 1;
+			user_priority = 1;
 		}
-		else if (data1 == '2' || data1 == 'l')
+		else if (data1 == '2' && door_status == 1)
 		{
 			setDire(2);
 			sprintf(buffer, "Closing\n");
 			UART_print(buffer);
 			sprintf(buffer, " ");
 			//while accel not in position
-			//setDire(3);
+			message_pending = 2;
+			user_priority = 1;
 		}
 		else
 		{
@@ -84,19 +86,15 @@ int main(void) {
 	uint8_t Data_Send;
 	uint8_t Data_St[1];
 	uint8_t Data_Rc[1];
-	//int temp;
 	
 	double x,y,z;
 	
 	readValues(&x, &y, &z);
-/*
-	if(z*(4E-3) > 0.55)
-		setDire(1);
+	//setDire(3);
+	if(z*(4E-3) > 0.49)
+		setDire(2); //close if not when start
+	
 
-	while(z*(4E-3) > 0)
-		readValues(&x, &y, &z);
-*/
-	setDire(3);
 
 	// After initial setup, enable USART
 	
@@ -179,31 +177,38 @@ int main(void) {
 		//for(int i = 0; i < 50000; ++i); 
 			
 		// Temperature Polling
-		if ((Data_Receive > 23) && (Data_Receive < 128)){
-			tPoll++;
+		if ((Data_Receive > 25) && (Data_Receive < 128)){
+			t_hPoll++;
+			t_cPoll = 0;	
 		}else if((Data_Receive < 10) || (Data_Receive > 128)){
-			tPoll++;
+			t_cPoll++;
+			t_hPoll = 0;
 		}else{
-			tPoll = 0;
+			t_hPoll = 0;
+			t_cPoll = 0;		
 		}
 
 			
-		if(doorLockout(0) && (tPoll == 5) && (door_status == 0) && (user_priority == 0))
+		if(doorLockout(0) && (t_hPoll == 3) && (door_status == 0))
 		{
 		  sprintf(buffer, "Temperature: %d C. Too hot. Door opening.\n", (int8_t)Data_Receive);
 		  UART_print(buffer);
+			
 			message_pending = 1;
+			t_hPoll = 0;
+			t_cPoll = 0;
 			setDire(1);
-			tPoll = 0;
 		}
 		
-		if(doorLockout(0) && (tPoll == 5) && (door_status == 1) && (user_priority == 0))
+		if(doorLockout(0) && (t_cPoll == 3) && (door_status == 1))
 		{ // ~200 means underflow of the data, door_status should ==1
 			sprintf(buffer, "Temperature: %d C. Too cold. Door closing.\n", (int8_t)Data_Receive);
 		  UART_print(buffer);
 			message_pending = 2;
+			t_cPoll = 0;
+			t_hPoll = 0;
 			setDire(2);
-			tPoll = 0;
+
 		}
 		
 		// END I2C
