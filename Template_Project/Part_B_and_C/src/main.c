@@ -82,6 +82,7 @@ int main(void) {
 	uint8_t Data_Send;
 	uint8_t Data_St[1];
 	uint8_t Data_Rc[1];
+	//int temp;
 	
 	double x,y,z;
 	
@@ -168,20 +169,26 @@ int main(void) {
 		I2C_ReceiveData(I2C1, SecondaryAddress, &Data_Receive, 1UL);
 		
 		// Print Temperature to Termite
+		//sprintf(buffer, "%d C\n", (int8_t)Data_Receive);
+		//UART_print(buffer);
 		
 		// Some delay
 		//for(int i = 0; i < 50000; ++i); 
 		
-		if(doorLockout(0) && (Data_Receive > 23) && (door_status == 0) && (user_priority == 0))
+
+			
+		if(doorLockout(0) && ((Data_Receive > 23) && (Data_Receive < 128)) && (door_status == 0) && (user_priority == 0))
 		{
-		  sprintf(buffer, "%d C\n", Data_Receive);
+		  sprintf(buffer, "Temperature: %d C. Too hot. Door opening.\n", (int8_t)Data_Receive);
 		  UART_print(buffer);
 			message_pending = 1;
 			setDire(2);
 		}
 		
-		if(doorLockout(0) && (Data_Receive < 19) && (door_status == 1) && (user_priority == 0))
-		{
+		if(doorLockout(0) && ((Data_Receive < 10) || (Data_Receive > 128)) && (door_status == 0) && (user_priority == 0))
+		{ // ~200 means underflow of the data, door_status should ==1
+			sprintf(buffer, "Temperature: %d C. Too cold. Door closing.\n", (int8_t)Data_Receive);
+		  UART_print(buffer);
 			message_pending = 2;
 			setDire(1);
 		}

@@ -86,10 +86,10 @@ void checkCanRotate(void)
 {
 	readValues(&x, &y, &z);
 	
-	if((dire == 1) && (z*(4E-3) <= 0.0)) 
+	if((dire == 1) && (z*(4E-3) <= 0.56)) 
 		setDire(3);
 	
-	if((dire == 2) && (z*(4E-3) >= 0.8))
+	if((dire == 2) && (z*(4E-3) >= 0.89))
 		setDire(3);
 	
 }
